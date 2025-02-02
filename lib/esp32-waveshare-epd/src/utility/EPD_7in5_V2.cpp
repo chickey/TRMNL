@@ -338,7 +338,7 @@ static void EPD_WaitUntilIdle(void)
         //EPD_SendCommand(0x71);
         //busy = DEV_Digital_Read(EPD_BUSY_PIN);
         busy = gpio_get_level( (gpio_num_t)EPD_BUSY_PIN );
-    } while (!busy);
+    } while (busy);
     // DEV_Delay_ms(200);
     Debug("e-Paper busy release\r\n");
 }
@@ -392,16 +392,25 @@ UBYTE EPD_7IN5_V2_Init(void)
     // EPD_SendData(0x07);    //VGH=20V,VGL=-20V
     // EPD_SendData(0x3f);		//VDH=15V
     // EPD_SendData(0x3f);		//VDL=-15V
-
+/*UBYTE Voltage_Frame_7IN5_V2[] = {
+    0x6,
+    0x3F,
+    0x3F,
+    0x11,
+    0x24,
+    0x7,
+    0x17,
+};
+*/
     EPD_SendCommand(0x01);                      // power setting
-    EPD_SendData(0x17);                         // 1-0=11: internal power
-    EPD_SendData(*(Voltage_Frame_7IN5_V2 + 6)); // VGH&VGL
-    EPD_SendData(*(Voltage_Frame_7IN5_V2 + 1)); // VSH
-    EPD_SendData(*(Voltage_Frame_7IN5_V2 + 2)); //  VSL
-    EPD_SendData(*(Voltage_Frame_7IN5_V2 + 3)); //  VSHR
+    EPD_SendData(0x07);                         // 1-0=11: internal power
+    EPD_SendData(0x17); // VGH&VGL
+    EPD_SendData(0x3F); // VSH
+    EPD_SendData(0x26); //  VSL
+    EPD_SendData(0x11); //  VSHR
 
     EPD_SendCommand(0x82);                      // VCOM DC Setting
-    EPD_SendData(*(Voltage_Frame_7IN5_V2 + 4)); // VCOM
+    EPD_SendData(0x24); // VCOM
 
     EPD_SendCommand(0x06); // Booster Setting
     EPD_SendData(0x27);

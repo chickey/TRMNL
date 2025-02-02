@@ -20,7 +20,8 @@ void display_init(void)
     Log.info("%s [%d]: dev module end\r\n", __FILE__, __LINE__);
 
     Log.info("%s [%d]: screen hw start\r\n", __FILE__, __LINE__);
-    EPD_7IN5_V2_Init_New();
+    //EPD_7IN5_V2_Init_New();
+    EPD_7IN5_V2_Init();
     Log.info("%s [%d]: screen hw end\r\n", __FILE__, __LINE__);
 }
 
